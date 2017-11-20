@@ -7,10 +7,14 @@ package controllers;
 
 
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import views.ViewClientes;
 import models.ModelClientes;
 import models.ModelConectar;
+import net.proteanit.sql.DbUtils;
 
 public class ControllerClientes {
     
@@ -38,6 +42,9 @@ public class ControllerClientes {
         view_clientes.jbtn_modificar.addActionListener(e -> this.jbtnActualizar());
         view_clientes.jbtn_eliminar.addActionListener(e -> this.jbtnEliminar());
         view_clientes.jbtn_cancelar.addActionListener(e -> this.jbtnCancelar());
+        view_clientes.jbtn_mostrar.addActionListener(e -> this.buscarEnTabla());
+      
+       
         
         
         initView();
@@ -46,10 +53,13 @@ public class ControllerClientes {
     
     public void initView(){
         
+        
         bloquear();
         model_conectar.conectarBD();
-        model_clientes.seleccionarClientes();
+        model_clientes.seleccionarTodosClientes();
         getValores();
+        llenarTabla();
+        
    
     }
     
@@ -70,7 +80,7 @@ public class ControllerClientes {
     
     public void setValores(){
         
-     
+       
         model_clientes.setNombre(view_clientes.jtf_nombre.getText());
         model_clientes.setDomicilio(view_clientes.jtf_domicilio.getText());
         model_clientes.setNumero(view_clientes.jtf_telefono.getText());
@@ -117,27 +127,37 @@ public class ControllerClientes {
     
     public void jbtnInsertar(){
         
-       String registro;
-       registro = view_clientes.jtf_nombre.getText();
+       String nombre = view_clientes.jtf_nombre.getText();
+       String paterno = view_clientes.jtf_apellido_paterno.getText();
+       String materno = view_clientes.jtf_apellido_materno.getText();
+       String domicilio = view_clientes.jtf_domicilio.getText();
+       String numero = view_clientes.jtf_telefono.getText();
         
-       confirmar = JOptionPane.showConfirmDialog(null,"¿Desea guardar al cliente "+registro+"?","Guardar Registro",JOptionPane.YES_NO_OPTION);
        
-       if(JOptionPane.OK_OPTION == confirmar){
+         if(nombre.equals("")||paterno.equals("")||materno.equals("")||domicilio.equals("")||numero.equals("")){
            
-        setValores();
-        model_clientes.insertarCliente();
-        getValores();
-        model_clientes.seleccionarClientes();
+           JOptionPane.showMessageDialog(null, "Llena todos los campos");
            
        }
+         
+         else{
+             
+              String registro;
+              registro = view_clientes.jtf_nombre.getText();
+        
+             confirmar = JOptionPane.showConfirmDialog(null,"¿Desea guardar al cliente "+registro+"?","Guardar Registro",JOptionPane.YES_NO_OPTION);
        
-       else{
+                 if(JOptionPane.OK_OPTION == confirmar){
            
-           model_clientes.primerCliente();
-           getValores();
+                    setValores();
+                    model_clientes.insertarCliente();
+                    getValores();
+                    model_clientes.seleccionarTodosClientes();
+                    view_clientes.jtable_clientes.setModel(DbUtils.resultSetToTableModel(model_clientes.getResut()));
            
-       }
-       
+                 }
+                 
+            }
     }
     
     public void jbtnActualizar(){
@@ -152,7 +172,7 @@ public class ControllerClientes {
            setValores();
            model_clientes.actualizarCliente();
            getValores();
-           model_clientes.seleccionarClientes();
+           model_clientes.seleccionarTodosClientes();
         }
         
         else{
@@ -174,7 +194,7 @@ public class ControllerClientes {
              setValores();
              model_clientes.eliminarCliente();
              getValores();
-             model_clientes.seleccionarClientes();
+             model_clientes.seleccionarTodosClientes();
          }
          
          else{
@@ -194,6 +214,7 @@ public class ControllerClientes {
         view_clientes.jtf_domicilio.setEditable(false);
         view_clientes.jtf_nombre.setEditable(false);
         view_clientes.jtf_telefono.setEditable(false);
+        
     }
     
     public void desbloquear(){
@@ -217,7 +238,7 @@ public class ControllerClientes {
     
     public void jbtnCancelar(){
         
-        model_clientes.seleccionarClientes();
+        model_clientes.seleccionarTodosClientes();
         getValores();
         view_clientes.jbtn_cancelar.setEnabled(false);
         view_clientes.jbtn_guardar.setEnabled(false);
@@ -236,10 +257,57 @@ public class ControllerClientes {
         
     }
     
-    public void generarNuevoID(){
+   
+    
+    public void llenarTabla(){
         
+        model_clientes.seleccionarClientes();
+        view_clientes.jtable_clientes.setModel(DbUtils.resultSetToTableModel(model_clientes.getResut()));
         
+        JTableHeader columns = view_clientes.jtable_clientes.getTableHeader();
+        TableColumnModel header = columns.getColumnModel();
+        header.getColumn(0).setHeaderValue("Número de cliente");
+        header.getColumn(1).setHeaderValue("Nombre");
+        header.getColumn(2).setHeaderValue("Apellido Patreno");
+        header.getColumn(3).setHeaderValue("Apellido Materno");
+        header.getColumn(4).setHeaderValue("Domicilio");
+        header.getColumn(5).setHeaderValue("Telefono");
+       
+        model_clientes.seleccionarTodosClientes();
+    
     }
+    
+    public void buscarEnTabla() {
+        
+        try{
+        
+        model_clientes.buscarClientes(view_clientes.jtf_buscar.getText());
+        view_clientes.jtable_clientes.setModel(DbUtils.resultSetToTableModel(model_clientes.getResut()));
+        
+        
+        model_clientes.getResut().next();
+        
+        JTableHeader columns = view_clientes.jtable_clientes.getTableHeader();
+        TableColumnModel header = columns.getColumnModel();
+        header.getColumn(0).setHeaderValue("Número de cliente");
+        header.getColumn(1).setHeaderValue("Nombre");
+        header.getColumn(2).setHeaderValue("Apellido Patreno");
+        header.getColumn(3).setHeaderValue("Apellido Materno");
+        header.getColumn(4).setHeaderValue("Domicilio");
+        header.getColumn(5).setHeaderValue("Telefono");
+        
+        model_clientes.seleccionarTodosClientes();
+        
+        view_clientes.jtf_buscar.setText("");
+       
+      
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 113" + ex.getMessage());
+        }
+    }
+    
+    
     
     
 }

@@ -124,7 +124,7 @@ public class ViewIngredientes extends javax.swing.JInternalFrame {
 
         jl_buscar.setText("Buscar");
 
-        jbtn_mostrar.setText("Mostrar Todos");
+        jbtn_mostrar.setText("Mostrar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +143,7 @@ public class ViewIngredientes extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jtf_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(jbtn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jbtn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))

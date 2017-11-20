@@ -48,6 +48,11 @@ public class ModelIngredientes {
         this.ingrediente = ingrediente;
     }
     
+    public ResultSet getResut(){
+        
+        return resut;
+    }
+    
     //*************************
     
     public void llenarIngredientes(){
@@ -59,7 +64,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 120" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 126" + ex.getMessage());
         }
         
     }
@@ -73,11 +78,11 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 121" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 127" + ex.getMessage());
         }
     }
     
-    public void seleccionarIngrediente(){
+    public void seleccionarTodosIngrediente(){
         
         try{
             
@@ -89,7 +94,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 122" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 128" + ex.getMessage());
         }
     }
     
@@ -105,7 +110,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 123" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 129" + ex.getMessage());
         }
     }
     
@@ -118,7 +123,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 124" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 130" + ex.getMessage());
         }
         
     }
@@ -135,7 +140,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 125" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 131" + ex.getMessage());
         }
     }
     
@@ -155,7 +160,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 126" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 132" + ex.getMessage());
         }
     }
     
@@ -174,7 +179,7 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 127" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 133" + ex.getMessage());
         }
     }
     
@@ -193,7 +198,46 @@ public class ModelIngredientes {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 128" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 134" + ex.getMessage());
+        }
+    }
+    
+    public void seleccionarIngrediente(){
+        
+        try{
+            
+            sql = "Select * from elementos;";
+            pst = model_conectar.getConexion().prepareStatement(sql);
+            
+            resut = pst.executeQuery();
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 135" + ex.getMessage());
+        }
+    }
+    
+    public void buscarIngrediente(String ingrediente){
+        
+        try{
+            if(ingrediente.equals("")){
+                
+                seleccionarIngrediente();
+            }
+            
+            else{
+                
+                sql = "Select * from elementos where elemento = ?;";
+                pst = model_conectar.getConexion().prepareStatement(sql);
+                
+                pst.setString(1, ingrediente);
+                
+                resut = pst.executeQuery();
+            }
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 136" +ex.getMessage());
         }
     }
 }

@@ -21,12 +21,14 @@ public final class ControllerPrincipal {
     ViewIngredientes view_ingredientes;
     
     
+    
     public ControllerPrincipal(Object models[],Object views[],Object controllers[]){
         
         this.view_clientes = (ViewClientes) views[1];
         this.view_principal = (ViewPrincipal) views[0];
         this.view_productos = (ViewProductos) views[2];
         this.view_ingredientes = (ViewIngredientes) views[3];
+      
        
         view_principal.jm_item_clientes_re.addActionListener(e -> this.frameClientes());
         view_principal.jm_item_productos_re.addActionListener(e -> this.frameProductos());
@@ -40,7 +42,6 @@ public final class ControllerPrincipal {
         view_principal.setVisible(true);
         view_principal.setTitle("Sistema Administrativo Para Cocina Economica   SAPCE");
         view_principal.setExtendedState(ViewPrincipal.MAXIMIZED_BOTH);
-        
         
         
     }

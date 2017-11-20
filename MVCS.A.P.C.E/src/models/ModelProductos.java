@@ -79,6 +79,11 @@ public class ModelProductos {
         this.cantidad = cantidad;
     }
     
+    public ResultSet getResut(){
+        
+        return resut;
+    }
+    
     //****************************///
     
     public void llenarProductos(){
@@ -95,7 +100,7 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 111" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 114" + ex.getMessage());
         }
     }
     
@@ -108,11 +113,11 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 112" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 115" + ex.getMessage());
         }
     }
     
-    public void seleccionarProductos(){
+    public void seleccionarTodosProductos(){
         
         try{
             
@@ -124,7 +129,7 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 113" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 116" + ex.getMessage());
         }
     }
     
@@ -137,7 +142,7 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 114" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 117" + ex.getMessage());
         }
     }
     
@@ -153,7 +158,7 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 115" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 118" + ex.getMessage());
         }
     }
     
@@ -169,7 +174,7 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 116" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 119" + ex.getMessage());
         }
     }
     
@@ -190,8 +195,95 @@ public class ModelProductos {
             
         }catch(SQLException ex){
             
-            JOptionPane.showMessageDialog(null, "Error 117" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error 120" + ex.getMessage());
         }
+    }
+    
+    public void actualizarProducto(){
+        
+        try{
+            
+            sql = "Update productos set producto = ?, cantidad_producto = ?, precio_venta = ?, precio_compra = ? "
+                    + "where id_producto = ?;";
+            
+            pst = model_conectar.getConexion().prepareStatement(sql);
+            
+            pst.setString(1, getProducto());
+            pst.setString(2, getCantidad());
+            pst.setInt(3, getPrecioVenta());
+            pst.setInt(4, getPrecioCompra());
+            pst.setInt(5, getIdProducto());
+            
+            pst.executeUpdate();
+            primerProducto();
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 121" + ex.getMessage());
+        }
+    }
+    
+    public void eliminarProducto(){
+        
+        try{
+            
+            sql = "Delete from productos where id_producto = ?;";
+            pst = model_conectar.getConexion().prepareStatement(sql);
+            
+            pst.setInt(1, getIdProducto());
+            
+            pst.executeUpdate();
+            
+            primerProducto();
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 122" + ex.getMessage());
+        }
+    }
+    
+    public void seleccionarProductos(){
+        
+        try{
+            
+            sql = "Select * from productos;";
+            pst = model_conectar.getConexion().prepareStatement(sql);
+            
+            resut = pst.executeQuery();
+            
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 123" + ex.getMessage());
+        }
+        
+    }
+    
+      public void buscarProducto(String producto){
+          
+        try{
+            
+            if(producto.equals("")){
+                
+                seleccionarProductos();
+            }
+            
+            else{
+                  sql = "Select * from productos where producto = ?;";
+                  pst = model_conectar.getConexion().prepareStatement(sql);
+            
+                  pst.setString(1, producto);
+            
+                  resut = pst.executeQuery();    
+            }
+            
+                   
+            
+        }catch(SQLException ex){
+            
+             JOptionPane.showMessageDialog(null, "Error 124" + ex.getMessage());
+        }
+        
     }
 
 }

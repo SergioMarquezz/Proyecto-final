@@ -54,10 +54,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         );
         jdesktop_principalLayout.setVerticalGroup(
             jdesktop_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 418, Short.MAX_VALUE)
         );
 
-        jmenu_archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/archivo.jpg"))); // NOI18N
+        jmenu_archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/archivo-icono-5812-32.png"))); // NOI18N
         jmenu_archivo.setText("Archivo");
 
         jm_item_sesion.setText("Cerrar Sesion");
@@ -68,7 +68,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jmbarr_archivo.add(jmenu_archivo);
 
-        jmenu_registros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registros.jpg"))); // NOI18N
+        jmenu_registros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signatura-icono-8756-32.png"))); // NOI18N
         jmenu_registros.setText("Registros");
 
         jm_item_clientes_re.setText("Clientes");
@@ -82,7 +82,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jmbarr_archivo.add(jmenu_registros);
 
-        jmenu_pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pedidos(33x1469).jpg"))); // NOI18N
+        jmenu_pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/seleccione-ver-icono-6736-32.png"))); // NOI18N
         jmenu_pedidos.setText("Pedidos");
 
         jm_item_abrir.setText("Abrir");
@@ -90,7 +90,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jmbarr_archivo.add(jmenu_pedidos);
 
-        jmenu_consultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/busqueda.jpg"))); // NOI18N
+        jmenu_consultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar-archivo-icono-5865-32.png"))); // NOI18N
         jmenu_consultas.setText("Consultas");
 
         jm_item_clientes_co.setText("Clientes");

@@ -17,6 +17,8 @@ public class ModelConectar {
     private Connection conexion;
     private Statement stm;
     
+   
+    
     public Connection getConexion(){
         
         return conexion;
@@ -29,6 +31,8 @@ public class ModelConectar {
             
              conexion = DriverManager.getConnection("jdbc:mysql://localhost/SAPCE","root","sergioalberto");
              stm = conexion.createStatement();
+             
+          
              
         }catch(SQLException ex){
             

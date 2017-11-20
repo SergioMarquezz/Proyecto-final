@@ -40,7 +40,7 @@
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Component id="jtf_buscar" min="-2" pref="90" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="jbtn_mostrar" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="jbtn_mostrar" min="-2" pref="95" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
@@ -300,7 +300,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbtn_mostrar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mostrar Todos"/>
+        <Property name="text" type="java.lang.String" value="Mostrar"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -63,6 +63,11 @@ public class ModelClientes {
         return numero;
     }
     
+    public ResultSet getResut(){
+        
+        return resut;
+    }
+    
     //***************************//
     
     
@@ -111,6 +116,9 @@ public class ModelClientes {
             setDomicilio(resut.getString("domicilio"));
             setNumero(resut.getString("numero"));
             
+            
+           
+            
         }catch(SQLException ex){
             
             JOptionPane.showMessageDialog(null, "Error 102" + ex.getMessage());
@@ -130,7 +138,7 @@ public class ModelClientes {
         }
     }
     
-    public void seleccionarClientes(){
+    public void seleccionarTodosClientes(){
         
         try{
             
@@ -262,6 +270,50 @@ public class ModelClientes {
             JOptionPane.showMessageDialog(null, "Error 110" + ex.getMessage());
         }
     }
-
+    
+    public void seleccionarClientes(){
+        
+        try{
+            
+            sql = "Select * from clientes;";
+            pst = model_conectar.getConexion().prepareStatement(sql);
+            
+            resut = pst.executeQuery();
+            
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 111" + ex.getMessage());
+        }
+        
+    }
+    
+    public void buscarClientes(String nombre){
+          
+        try{
+            
+            if(nombre.equals("")){
+                
+                seleccionarClientes();
+            }
+            
+            else{
+                  sql = "Select * from clientes where nombre = ?;";
+                  pst = model_conectar.getConexion().prepareStatement(sql);
+            
+                  pst.setString(1, nombre);
+            
+                  resut = pst.executeQuery();    
+            }
+            
+                   
+            
+        }catch(SQLException ex){
+            
+             JOptionPane.showMessageDialog(null, "Error 112" + ex.getMessage());
+        }
+        
+    }
+    
     
 }

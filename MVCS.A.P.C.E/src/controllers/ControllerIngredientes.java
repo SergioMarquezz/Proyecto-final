@@ -5,10 +5,15 @@
  */
 package controllers;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import models.ModelIngredientes;
 import models.ModelConectar;
 import views.ViewIngredientes;
+
+import net.proteanit.sql.DbUtils;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 
 public class ControllerIngredientes {
     
@@ -35,14 +40,16 @@ public class ControllerIngredientes {
         view_ingredientes.jbtn_guardar.addActionListener(e -> this.jbtnGuardar());
         view_ingredientes.jbtn_modificar.addActionListener(e -> this.jbtnActualizar());
         view_ingredientes.jbtn_eliminar.addActionListener(e -> this.jbtnEliminar());
+        view_ingredientes.jbtn_mostrar.addActionListener(e -> this.buscarEnTabla());
         
     }
     
     public void initView(){
         
         model_conectar.conectarBD();
-        model_ingredientes.seleccionarIngrediente();
+        model_ingredientes.seleccionarTodosIngrediente();
         getValores();
+        llenarTabla();
     }
     
     public void getValores(){
@@ -156,6 +163,44 @@ public class ControllerIngredientes {
             getValores();
         }
        
+    }
+    
+    public void llenarTabla(){
+        
+        model_ingredientes.seleccionarIngrediente();
+        view_ingredientes.jtable_ingrediente.setModel(DbUtils.resultSetToTableModel(model_ingredientes.getResut()));
+        
+        JTableHeader columns = view_ingredientes.jtable_ingrediente.getTableHeader();
+        TableColumnModel header = columns.getColumnModel();
+        header.getColumn(0).setHeaderValue("Numero de ingrediente");
+        header.getColumn(1).setHeaderValue("Ingrediente");
+        
+        model_ingredientes.seleccionarTodosIngrediente();
+        
+    }
+    
+    public void buscarEnTabla(){
+        
+        try{
+            model_ingredientes.buscarIngrediente(view_ingredientes.jtf_buscar.getText());
+            view_ingredientes.jtable_ingrediente.setModel(DbUtils.resultSetToTableModel(model_ingredientes.getResut()));
+
+
+            model_ingredientes.getResut().next();
+
+            JTableHeader columns = view_ingredientes.jtable_ingrediente.getTableHeader();
+            TableColumnModel header = columns.getColumnModel();
+            header.getColumn(0).setHeaderValue("Número de ingrediente");
+            header.getColumn(1).setHeaderValue("Ingrediente");
+        
+            model_ingredientes.seleccionarTodosIngrediente();
+        
+            view_ingredientes.jtf_buscar.setText("");
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 137" + ex.getMessage());
+        }
     }
     
 }

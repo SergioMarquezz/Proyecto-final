@@ -5,9 +5,13 @@
  */
 package controllers;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import models.ModelConectar;
 import models.ModelProductos;
+import net.proteanit.sql.DbUtils;
 import views.ViewProductos;
 
 public class ControllerProductos {
@@ -35,14 +39,16 @@ public class ControllerProductos {
         view_productos.jbtn_guardar.addActionListener(e -> this.jbtnGuardar());
         view_productos.jbtn_modificar.addActionListener(e -> this.jbtnModificar());
         view_productos.jbtn_eliminar.addActionListener(e -> this.jbtnEliminar());
+        view_productos.jbtn_mostrar.addActionListener(e -> this.buscarEnTabla());
         
     }
     
     public void initView(){
         
         model_conectar.conectarBD();
-        model_productos.seleccionarProductos();
+        model_productos.seleccionarTodosProductos();
         getValores();
+        llenarTabla();
         
     }
     
@@ -129,7 +135,7 @@ public class ControllerProductos {
         if(JOptionPane.OK_OPTION == confirmar){
             
             setValores();
-           // model_productos.actualizarProducto();
+            model_productos.actualizarProducto();
             getValores();
             model_productos.seleccionarProductos();
         }
@@ -149,7 +155,7 @@ public class ControllerProductos {
         if(JOptionPane.OK_OPTION == confirmar){
             
             setValores();
-            //model_productos.eliminarProducto();
+            model_productos.eliminarProducto();
             getValores();
             model_productos.seleccionarProductos();
         }
@@ -157,6 +163,52 @@ public class ControllerProductos {
             
             model_productos.primerProducto();
             getValores();
+        }
+    }
+    
+     public void llenarTabla(){
+        
+        model_productos.seleccionarProductos();
+        view_productos.jtable_productos.setModel(DbUtils.resultSetToTableModel(model_productos.getResut()));
+        
+        JTableHeader columns = view_productos.jtable_productos.getTableHeader();
+        TableColumnModel header = columns.getColumnModel();
+        header.getColumn(0).setHeaderValue("Número de producto");
+        header.getColumn(1).setHeaderValue("Producto");
+        header.getColumn(2).setHeaderValue("Cantidad");
+        header.getColumn(3).setHeaderValue("Precio de venta");
+        header.getColumn(4).setHeaderValue("Precio de compra");
+       
+        model_productos.seleccionarTodosProductos();
+    
+    }
+     
+     public void buscarEnTabla() {
+        
+        try{
+        
+             model_productos.buscarProducto(view_productos.jtf_buscar.getText());
+             view_productos.jtable_productos.setModel(DbUtils.resultSetToTableModel(model_productos.getResut()));
+        
+        
+             model_productos.getResut().next();
+        
+        JTableHeader columns = view_productos.jtable_productos.getTableHeader();
+        TableColumnModel header = columns.getColumnModel();
+        header.getColumn(0).setHeaderValue("Número de producto");
+        header.getColumn(1).setHeaderValue("Producto");
+        header.getColumn(2).setHeaderValue("Cantidad");
+        header.getColumn(3).setHeaderValue("Precio de venta");
+        header.getColumn(4).setHeaderValue("Precio de compra");
+        
+        
+        model_productos.seleccionarTodosProductos();
+        
+        view_productos.jtf_buscar.setText("");
+        
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error 125" + ex.getMessage());
         }
     }
 }
